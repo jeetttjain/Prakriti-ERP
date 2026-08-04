@@ -11,6 +11,7 @@ const {
   exportSupplierStatementPDF,
   exportTableExcel,
   exportTableCSV,
+  exportReportPDF,
   exportReportExcel,
   exportReportCSV,
   exportQRCode,
