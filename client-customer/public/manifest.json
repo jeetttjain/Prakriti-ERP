@@ -1,0 +1,20 @@
+{
+  "short_name": "Prakriti Portal",
+  "name": "Prakriti B2B Mobile Customer Portal",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#ffffff",
+  "theme_color": "#16a34a",
+  "display": "standalone"
+}

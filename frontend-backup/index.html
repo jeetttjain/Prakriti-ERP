@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prakriti B2B Vegetable Supplier ERP</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+  <!-- ADMIN SHELL LAYOUT -->
+  <div id="admin-shell" class="app-container hidden">
+    <!-- Left Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <img src="logo.jpg" class="sidebar-logo-img" alt="Prakriti Logo">
+        <div class="logo-text">
+          Prakriti
+          <span>Veg wholesale</span>
+        </div>
+      </div>
+      <nav class="sidebar-menu">
+        <button class="menu-item active" data-view="dashboard">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"></rect><rect x="14" y="3" width="7" height="5" rx="1"></rect><rect x="14" y="12" width="7" height="9" rx="1"></rect><rect x="3" y="16" width="7" height="5" rx="1"></rect></svg>
+          Dashboard
+        </button>
+        <button class="menu-item" data-view="orders">
+          <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+          Orders
+        </button>
+        <button class="menu-item" data-view="customers">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          Customers
+        </button>
+        <button class="menu-item" data-view="billing">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          Billing
+        </button>
+        <button class="menu-item" data-view="payments">
+          <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2" ry="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+          Payments
+        </button>
+        <button class="menu-item" data-view="reports">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          Reports
+        </button>
+        <button class="menu-item" data-view="settings">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+          Settings
+        </button>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="admin-mini-profile">
+          <div class="avatar" id="admin-avatar">A</div>
+          <div class="profile-info">
+            <span class="profile-name" id="admin-profile-name">Owner Admin</span>
+            <span class="profile-role">Wholesale Buyer</span>
+          </div>
+        </div>
+        <button class="btn-logout" id="sidebar-logout-btn" title="Logout">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <div class="main-wrapper">
+      <!-- Top Bar -->
+      <header class="top-bar">
+        <div class="top-left">
+          <button class="hamburger" id="sidebar-toggle-btn">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+          <div class="search-container">
+            <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" class="search-input" id="global-search-bar" placeholder="Search orders, customers, veggies...">
+          </div>
+        </div>
+        <div class="top-right">
+          <div class="date-indicator">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <span id="header-today-date">Friday, 3 July 2026</span>
+          </div>
+          <button class="notification-bell" id="btn-notifications">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+            <span class="notification-badge" id="notification-unread-dot"></span>
+          </button>
+        </div>
+      </header>
+
+      <!-- View Containers -->
+      <main class="content-area" id="admin-view-content">
+
+        <!-- DASHBOARD VIEW -->
+        <section id="view-dashboard" class="view-section">
+          <div class="view-header">
+            <div class="view-title">
+              <h1 id="dashboard-welcome">Prakriti Operations Dashboard</h1>
+              <p>Vegetable B2B wholesales and order management overview</p>
+            </div>
+            <div class="view-actions">
+              <button class="btn btn-secondary btn-sm" id="btn-dashboard-whatsapp">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                Copy Buying List
+              </button>
+              <button class="btn btn-primary btn-sm" id="btn-dashboard-new-cust">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Add Customer
+              </button>
+            </div>
+          </div>
+
+          <!-- SaaS metrics -->
+          <div class="stats-grid" id="dashboard-stats-grid">
+            <!-- Rendered Dynamically -->
+          </div>
+
+          <!-- Grid: Buying List & Activities -->
+          <div class="dashboard-grid">
+            <!-- Today's Buying List (LEFT) -->
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Today's Buying List</h3>
+                  <p class="card-subtitle">Aggregated weight requirement to purchase from wholesale market this morning</p>
+                </div>
+                <span class="badge badge-success" id="buying-list-summary-tag">0 Kg total</span>
+              </div>
+              <div class="card-content">
+                <div class="buying-list-grid" id="dashboard-buying-list">
+                  <!-- Generated Dynamically -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Recent Orders/Timeline (RIGHT) -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Recent Activity</h3>
+              </div>
+              <div class="card-content">
+                <div class="activity-list" id="dashboard-activity-list">
+                  <!-- Generated Dynamically -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ORDERS VIEW -->
+        <section id="view-orders" class="view-section hidden">
+          <div class="view-header">
+            <div class="view-title">
+              <h1>Customer Orders</h1>
+              <p>Review nightly orders and track billing status</p>
+            </div>
+          </div>
+
+          <!-- Filters -->
+          <div class="filter-bar">
+            <div class="filter-group" id="order-time-filters">
+              <button class="filter-tab active" data-time="today">Today</button>
+              <button class="filter-tab" data-time="yesterday">Yesterday</button>
+              <button class="filter-tab" data-time="all">All Time</button>
+            </div>
+            <div class="filter-group">
+              <select class="form-select" style="width: 160px; padding: 6px 12px;" id="order-status-filter">
+                <option value="all">All Billing Status</option>
+                <option value="Pending">Pending Bill</option>
+                <option value="Billed">Billed</option>
+              </select>
+              <select class="form-select" style="width: 160px; padding: 6px 12px;" id="order-payment-filter">
+                <option value="all">All Payment Status</option>
+                <option value="Unpaid">Unpaid</option>
+                <option value="Partial">Partial</option>
+                <option value="Paid">Paid</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Orders Table -->
+          <div class="table-container">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Business Type</th>
+                  <th>Items Ordered</th>
+                  <th>Total Weight</th>
+                  <th>Time Received</th>
+                  <th>Bill Status</th>
+                  <th>Payment Status</th>
+                  <th style="text-align: right;">Action</th>
+                </tr>
+              </thead>
+              <tbody id="orders-table-body">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- CUSTOMERS VIEW -->
+        <section id="view-customers" class="view-section hidden">
+          <div class="view-header">
+            <div class="view-title">
+              <h1>Customer Directory</h1>
+              <p>Manage accounts, payment terms, and generate ordering QRs</p>
+            </div>
+            <button class="btn btn-primary" id="btn-add-customer">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              Add Customer
+            </button>
+          </div>
+
+          <!-- Filters -->
+          <div class="filter-bar">
+            <div class="filter-group">
+              <input type="text" class="form-input" style="width: 250px; padding: 8px 12px;" id="customer-search-input" placeholder="Search customer name or phone...">
+            </div>
+            <div class="filter-group" id="customer-status-tabs">
+              <button class="filter-tab active" data-status="Active">Active</button>
+              <button class="filter-tab" data-status="Inactive">Inactive</button>
+              <button class="filter-tab" data-status="all">All</button>
+            </div>
+          </div>
+
+          <!-- Customers Table -->
+          <div class="table-container">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Business Name</th>
+                  <th>Owner</th>
+                  <th>Mobile Number</th>
+                  <th>Payment Cycle</th>
+                  <th>Outstanding Balance</th>
+                  <th>Status</th>
+                  <th style="text-align: right;">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="customers-table-body">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- CUSTOMER DETAILS VIEW -->
+        <section id="view-customer-details" class="view-section hidden">
+          <div class="view-header">
+            <button class="btn btn-secondary btn-sm" id="btn-back-to-customers">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+              Back to Directory
+            </button>
+            <div class="view-actions">
+              <button class="btn btn-secondary btn-sm" id="btn-cust-detail-qr">View QR</button>
+              <button class="btn btn-primary btn-sm" id="btn-cust-detail-record-pay">Record Payment</button>
+            </div>
+          </div>
+
+          <div class="dashboard-grid">
+            <!-- Left Info Panel -->
+            <div>
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Business Profile</h3>
+                </div>
+                <div class="card-content" id="cust-profile-panel">
+                  <!-- Rendered dynamically -->
+                </div>
+              </div>
+
+              <!-- Customer QR code representation -->
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Order QR Code</h3>
+                </div>
+                <div class="card-content" style="text-align: center;" id="cust-qr-panel">
+                  <!-- Rendered dynamically -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Ledgers/Past Orders Panel -->
+            <div>
+              <!-- Ledger Statement card -->
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Account Ledger</h3>
+                  <span class="badge badge-danger" id="cust-ledger-total-outstanding">Outstanding: ₹0</span>
+                </div>
+                <div class="card-content">
+                  <div class="table-container" style="max-height: 300px; overflow-y: auto;">
+                    <table class="custom-table" style="font-size: 0.8rem;">
+                      <thead>
+                        <tr>
+                          <th>Date</th>
+                          <th>Description</th>
+                          <th>Debit (+)</th>
+                          <th>Credit (-)</th>
+                          <th>Balance</th>
+                        </tr>
+                      </thead>
+                      <tbody id="cust-ledger-body">
+                        <!-- Rendered dynamically -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Past orders card -->
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Past Orders</h3>
+                </div>
+                <div class="card-content">
+                  <div class="table-container" style="max-height: 250px; overflow-y: auto;">
+                    <table class="custom-table" style="font-size: 0.8rem;">
+                      <thead>
+                        <tr>
+                          <th>Order ID</th>
+                          <th>Date</th>
+                          <th>Items</th>
+                          <th>Total Weight</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody id="cust-orders-history-body">
+                        <!-- Rendered dynamically -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- BILLING VIEW -->
+        <section id="view-billing" class="view-section hidden">
+          <div class="view-header">
+            <div class="view-title">
+              <h1>Invoice Management</h1>
+              <p>Adjust daily vegetable prices and generate bills for nightly orders</p>
+            </div>
+          </div>
+
+          <div class="dashboard-grid" style="grid-template-columns: 1fr 1fr;">
+            <!-- Pending Billing list -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Pending Billing Actions</h3>
+              </div>
+              <div class="card-content">
+                <div class="table-container">
+                  <table class="custom-table" style="font-size: 0.85rem;">
+                    <thead>
+                      <tr>
+                        <th>Customer</th>
+                        <th>Cycle</th>
+                        <th>Pending Orders</th>
+                        <th>Unbilled Kgs</th>
+                        <th style="text-align: right;">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody id="pending-billing-table-body">
+                      <!-- Rendered dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Invoices Archive -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Invoices Archive</h3>
+              </div>
+              <div class="card-content">
+                <div class="table-container">
+                  <table class="custom-table" style="font-size: 0.85rem;">
+                    <thead>
+                      <tr>
+                        <th>Invoice ID</th>
+                        <th>Customer</th>
+                        <th>Date</th>
+                        <th>Total Amount</th>
+                        <th>Status</th>
+                        <th style="text-align: right;">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="invoices-table-body">
+                      <!-- Rendered dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- PAYMENTS VIEW -->
+        <section id="view-payments" class="view-section hidden">
+          <div class="view-header">
+            <div class="view-title">
+              <h1>Payments & Collections</h1>
+              <p>Log incoming cash/UPI transfers and check client balances</p>
+            </div>
+            <button class="btn btn-primary" id="btn-payments-record">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2" ry="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+              Record Payment
+            </button>
+          </div>
+
+          <!-- Alert Toggles & Stats -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <span class="stat-label">Total Outstanding</span>
+              <span class="stat-value" id="pay-metric-outstanding">₹0</span>
+              <div class="stat-trend trend-down">Needs active follow-up</div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Today's Collections</span>
+              <span class="stat-value" id="pay-metric-collection">₹0</span>
+              <div class="stat-trend trend-up">Collected this morning</div>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Reminders Status</span>
+              <div style="margin-top: 10px; display: flex; align-items: center; justify-content: space-between;">
+                <span class="stat-value" style="font-size: 1.25rem;" id="reminder-status-label">Active</span>
+                <label class="switch">
+                  <input type="checkbox" id="auto-reminders-toggle" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div class="stat-trend trend-neutral">Auto WhatsApp reminders on payment cycle</div>
+            </div>
+          </div>
+
+          <!-- Billing Ledgers / Payment History -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Payment Collection History</h3>
+            </div>
+            <div class="card-content">
+              <div class="table-container">
+                <table class="custom-table">
+                  <thead>
+                    <tr>
+                      <th>Ref ID</th>
+                      <th>Customer</th>
+                      <th>Date</th>
+                      <th>Amount Paid</th>
+                      <th>Method</th>
+                      <th>Reference Code</th>
+                      <th>Invoice Linked</th>
+                    </tr>
+                  </thead>
+                  <tbody id="payments-table-body">
+                    <!-- Rendered dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- REPORTS VIEW -->
+        <section id="view-reports" class="view-section hidden">
+          <div class="view-header">
+            <div class="view-title">
+              <h1>Business Intelligence & Sales Reports</h1>
+              <p>Download spreadsheets and track cashflow analytics</p>
+            </div>
+          </div>
+
+          <!-- Grid Charts -->
+          <div class="dashboard-grid">
+            <!-- Visual Collection Chart (LEFT) -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Weekly Sales Trend (₹)</h3>
+              </div>
+              <div class="card-content">
+                <div class="chart-container" id="reports-sales-chart">
+                  <!-- SVG bar chart will be drawn dynamically -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Best Sellers (RIGHT) -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Popular Items Sold This Week</h3>
+              </div>
+              <div class="card-content">
+                <div class="table-container">
+                  <table class="custom-table" style="font-size: 0.85rem;">
+                    <thead>
+                      <tr>
+                        <th>Vegetable</th>
+                        <th>Total Quantity Sold</th>
+                        <th>Rank</th>
+                      </tr>
+                    </thead>
+                    <tbody id="popular-items-table-body">
+                      <!-- Rendered dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sales Summary List table -->
+          <div class="card" style="margin-top: 24px;">
+            <div class="card-header">
+              <h3 class="card-title">Customer-Wise Sales Analysis</h3>
+              <div class="view-actions">
+                <button class="btn btn-secondary btn-sm" id="btn-report-export-excel">Download Excel</button>
+                <button class="btn btn-secondary btn-sm" id="btn-report-export-pdf">Download PDF</button>
+              </div>
+            </div>
+            <div class="card-content">
+              <div class="table-container">
+                <table class="custom-table">
+                  <thead>
+                    <tr>
+                      <th>Customer Name</th>
+                      <th>Orders Placed</th>
+                      <th>Total Volume (Kg/Banches)</th>
+                      <th>Billed Amount (₹)</th>
+                      <th>Payments Settled (₹)</th>
+                      <th>Outstanding Balance (₹)</th>
+                    </tr>
+                  </thead>
+                  <tbody id="reports-customer-sales-body">
+                    <!-- Rendered dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SETTINGS VIEW -->
+        <section id="view-settings" class="view-section hidden">
+          <div class="view-header">
+            <div class="view-title">
+              <h1>Supplier Settings & Vegetable Catalog</h1>
+              <p>Configure wholesale variables and vegetable catalog</p>
+            </div>
+          </div>
+
+          <div class="dashboard-grid">
+            <!-- Profile settings -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Business profile information</h3>
+              </div>
+              <div class="card-content">
+                <form id="settings-profile-form">
+                  <div class="form-group">
+                    <label class="form-label">Business Name</label>
+                    <input type="text" class="form-input" id="set-bus-name" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Owner Name</label>
+                    <input type="text" class="form-input" id="set-owner-name" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">WhatsApp Mobile Number (for notifications)</label>
+                    <input type="text" class="form-input" id="set-mobile" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Default UPI ID (Printed on Bills)</label>
+                    <input type="text" class="form-input" id="set-upi" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Business Address</label>
+                    <textarea class="form-textarea" rows="3" id="set-address" required></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+              </div>
+            </div>
+
+            <!-- Vegetable Inventory Catalogue manager -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Active Vegetable Catalog</h3>
+                <button class="btn btn-primary btn-sm" id="btn-settings-add-veg">Add New Vegetable</button>
+              </div>
+              <div class="card-content" style="max-height: 480px; overflow-y: auto;">
+                <div class="inventory-grid" id="settings-veg-catalog">
+                  <!-- Rendered dynamically -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+
+  <!-- LOGIN SCREEN LAYOUT -->
+  <div id="login-screen" class="login-outer">
+    <div class="login-card">
+      <div class="login-header">
+        <img src="logo.jpg" class="login-logo-img" alt="Prakriti Logo">
+        <h1 class="login-title">Prakriti Vegetable Supplier</h1>
+        <p class="login-subtitle">Wholesale Business Operating System (ERP)</p>
+      </div>
+      
+      <form id="login-form">
+        <div class="form-group">
+          <label class="form-label">Username</label>
+          <input type="text" class="form-input" id="login-username" placeholder="e.g. admin" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-input" id="login-password" placeholder="••••••••" required>
+        </div>
+        <div id="login-error-msg" class="hidden" style="color: #ef4444; font-size: 0.85rem; margin-bottom: 16px; font-weight: 500;">
+          Invalid credentials. Please use admin / admin.
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1rem; padding: 12px 18px;">
+          Log In to Dashboard
+        </button>
+      </form>
+      
+      <div class="demo-shortcut-box" id="demo-credentials-shortcut">
+        🚀 Click here to auto-fill credentials for demo
+      </div>
+    </div>
+  </div>
+
+
+  <!-- CUSTOMER ORDERING ROUTE VIEW (Mobile Staging Container) -->
+  <div id="customer-shell" class="customer-outer-wrap hidden">
+    <div class="phone-mockup">
+      <div class="phone-screen" id="customer-screen-view">
+        <!-- Rendered Dynamically -->
+      </div>
+    </div>
+  </div>
+
+
+  <!-- OVERLAY DIALOGS / MODALS -->
+  
+  <!-- Add Customer Modal -->
+  <div class="modal-overlay" id="modal-add-customer">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">Register B2B Customer</h3>
+        <button class="btn-close close-modal-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <form id="add-customer-form">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Business Name</label>
+            <input type="text" class="form-input" id="add-cust-business" placeholder="e.g. Gourmet Bites Restaurant" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Owner Name</label>
+            <input type="text" class="form-input" id="add-cust-owner" placeholder="e.g. Priya Nair" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Mobile Number</label>
+            <input type="tel" class="form-input" id="add-cust-mobile" placeholder="e.g. 9812345678" pattern="[0-9]{10}" title="Ten digit mobile number" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Payment Cycle</label>
+            <select class="form-select" id="add-cust-cycle">
+              <option value="Daily">Daily Billing</option>
+              <option value="Weekly">Weekly Statement (Every Monday)</option>
+              <option value="Monthly">Monthly Invoice (1st of month)</option>
+              <option value="Ledger">Ledger Rolling Account</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Owner Preferences / Delivery Notes</label>
+            <textarea class="form-textarea" rows="2" id="add-cust-notes" placeholder="Delivery time constraints, veggie sizes preferences, etc..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary close-modal-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Customer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- QR Ordering Code Viewer Modal -->
+  <div class="modal-overlay" id="modal-view-qr">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title" id="qr-modal-customer-name">QR Ordering Code</h3>
+        <button class="btn-close close-modal-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.85rem; color: var(--text-light); text-align: center; margin-bottom: 20px;">
+          Print this QR code and paste it in the customer's kitchen. Staff can scan it to place daily orders in 30 seconds.
+        </p>
+        <div class="qr-preview-box">
+          <div class="qr-canvas-mock">
+            <div class="qr-squares"></div>
+            <div class="qr-logo-overlay">P</div>
+          </div>
+          <div class="qr-link-copy" id="qr-modal-simulated-link">
+            <!-- Dynamic Link -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary close-modal-btn">Close</button>
+        <a href="#" id="qr-modal-test-link" class="btn btn-primary">Test Ordering Flow</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Adjust Rates & Generate Invoice Modal -->
+  <div class="modal-overlay" id="modal-generate-invoice">
+    <div class="modal-box" style="max-width: 600px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Adjust Morning Rates & Bill</h3>
+        <button class="btn-close close-modal-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <form id="generate-invoice-form">
+        <input type="hidden" id="invoice-form-cust-id">
+        <div class="modal-body">
+          <p style="font-size: 0.85rem; color: var(--text-light); margin-bottom: 16px;">
+            Set today's wholesale morning pricing per unit to generate final bill totals.
+          </p>
+          <div class="billing-rates-table">
+            <div class="billing-rates-row">
+              <div>Vegetable</div>
+              <div>Qty Ordered</div>
+              <div>Price / Unit</div>
+              <div style="text-align: right;">Total Amount</div>
+            </div>
+            <div id="invoice-items-rate-inputs">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 16px;">
+            <strong style="color: var(--text-main);">Final Invoice Total:</strong>
+            <span style="font-size: 1.5rem; font-weight: 700; color: var(--primary);" id="invoice-running-grand-total">₹0</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary close-modal-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Generate & Print Bill</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Record Payment Modal -->
+  <div class="modal-overlay" id="modal-record-payment">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">Record Client Payment</h3>
+        <button class="btn-close close-modal-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <form id="record-payment-form">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Select Customer</label>
+            <select class="form-select" id="record-pay-customer" required>
+              <!-- Filled dynamically -->
+            </select>
+          </div>
+          <div class="form-group hidden" id="record-pay-invoice-group">
+            <label class="form-label">Outstanding Invoices (Optional)</label>
+            <select class="form-select" id="record-pay-invoice">
+              <option value="">No Invoice link (General Credit)</option>
+              <!-- Filled dynamically -->
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Payment Amount (₹)</label>
+            <input type="number" class="form-input" id="record-pay-amount" placeholder="e.g. 5000" min="1" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Payment Method</label>
+            <select class="form-select" id="record-pay-method">
+              <option value="UPI">UPI / GPay / PhonePe</option>
+              <option value="Cash">Cash Handover</option>
+              <option value="Bank Transfer">NEFT / Bank Transfer</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Transaction Reference (ID / Notes)</label>
+            <input type="text" class="form-input" id="record-pay-ref" placeholder="UPI reference or Cash receiver name">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary close-modal-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Payment Record</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add Catalog Vegetable Modal -->
+  <div class="modal-overlay" id="modal-add-vegetable">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">Add Vegetable to Catalog</h3>
+        <button class="btn-close close-modal-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <form id="add-vegetable-form">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Vegetable Name</label>
+            <input type="text" class="form-input" id="add-veg-name" placeholder="e.g. Broccoli, Sweet Potato" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Category</label>
+            <select class="form-select" id="add-veg-category">
+              <option value="Daily">Daily Standard</option>
+              <option value="Root">Root Vegetables</option>
+              <option value="Leafy">Leafy Greens</option>
+              <option value="Exotic">Exotic Vegetables</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Unit of Measure</label>
+            <select class="form-select" id="add-veg-unit">
+              <option value="Kg">Kilogram (Kg)</option>
+              <option value="Bunch">Bunch (Gaddi)</option>
+              <option value="Pack">Pack (Box)</option>
+              <option value="Piece">Piece (Single)</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary close-modal-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary">Add Veg</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Print Receipt Modal -->
+  <div class="modal-overlay" id="modal-print-invoice">
+    <div class="modal-box" style="max-width: 700px; background: #f1f5f9;">
+      <div class="modal-header">
+        <h3 class="modal-title">Invoice Print & Download Staging</h3>
+        <button class="btn-close close-modal-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="modal-body" style="background: white; margin: 20px; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); overflow-x: auto;">
+        <div id="print-invoice-modal-content">
+          <!-- Print content rendered here -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary close-modal-btn">Close</button>
+        <button type="button" class="btn btn-secondary" onclick="window.print()">Print Document</button>
+        <button type="button" class="btn btn-primary" id="btn-invoice-pdf-download">Download PDF File</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main routing engine -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
