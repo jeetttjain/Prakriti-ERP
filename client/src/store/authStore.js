@@ -32,10 +32,10 @@ export const useAuthStore = create((set, get) => ({
     set({ isAdminLoggedIn: false, currentUser: null, accessToken: null, refreshToken: null });
   },
 
-  loginAdmin: async (email, password) => {
+  loginAdmin: async (username, password) => {
     set({ loading: true, error: null });
     try {
-      const res = await authService.login(email, password);
+      const res = await authService.login(username, password);
       const session = {
         isAdminLoggedIn: true,
         currentUser: res.data.user,
@@ -72,6 +72,7 @@ export const useAuthStore = create((set, get) => ({
       const updatedUser = {
         _id: res.data._id,
         name: res.data.name,
+        userCode: res.data.userCode,
         email: res.data.email,
         role: res.data.roleId?.roleName || "User",
         permissions: res.data.roleId?.permissions || {},

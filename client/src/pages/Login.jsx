@@ -8,30 +8,30 @@ import { ROUTES } from "../constants/routes";
  * @component
  */
 export default function Login() {
-  const { loginAdmin } = useAuthStore();
+  const { loginAdmin, error } = useAuthStore();
   const navigate = useNavigate();
   
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMsg, setErrorMsg] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const success = loginAdmin(username, password);
+    setErrorMsg(null);
+    const success = await loginAdmin(username.trim(), password);
     if (success) {
-      setErrorMsg(false);
       navigate(ROUTES.DASHBOARD);
     } else {
-      setErrorMsg(true);
+      setErrorMsg("Invalid credentials. Please use USR-0001 / admin.");
     }
   };
 
-  const handleShortcutClick = () => {
-    setUsername("admin");
+  const handleShortcutClick = async () => {
+    setUsername("USR-0001");
     setPassword("admin");
-    const success = loginAdmin("admin", "admin");
+    setErrorMsg(null);
+    const success = await loginAdmin("USR-0001", "admin");
     if (success) {
-      setErrorMsg(false);
       navigate(ROUTES.DASHBOARD);
     }
   };
@@ -53,7 +53,7 @@ export default function Login() {
             <input
               type="text"
               className="form-input"
-              placeholder="e.g. admin"
+              placeholder="Enter Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
@@ -71,9 +71,9 @@ export default function Login() {
             />
           </div>
           
-          {errorMsg && (
+          {(errorMsg || error) && (
             <div style={{ color: "#ef4444", fontSize: "0.85rem", marginBottom: "16px", fontWeight: "500" }}>
-              Invalid credentials. Please use admin / admin.
+              {error || errorMsg || "Invalid credentials."}
             </div>
           )}
           
@@ -83,7 +83,7 @@ export default function Login() {
         </form>
         
         <div className="demo-shortcut-box" onClick={handleShortcutClick} style={{ cursor: "pointer", marginTop: "16px", padding: "12px", border: "1px dashed var(--primary)", borderRadius: "6px", textAlign: "center", fontSize: "0.85rem", color: "var(--primary)", fontWeight: "600" }}>
-          🚀 Click here to auto-fill credentials for demo
+          🚀 Click here to auto-fill credentials for demo (USR-0001 / admin)
         </div>
       </div>
     </div>

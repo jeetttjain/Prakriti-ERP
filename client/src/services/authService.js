@@ -5,9 +5,9 @@ import { normalizeError } from "../utils/errors";
 /**
  * Executes credentials login on the backend.
  */
-export const login = async (email, password, config = {}) => {
+export const login = async (username, password, config = {}) => {
   try {
-    const response = await api.post(API_ENDPOINTS.AUTH.LOGIN, { email, password }, config);
+    const response = await api.post(API_ENDPOINTS.AUTH.LOGIN, { username, password }, config);
     return response.data;
   } catch (error) {
     throw normalizeError(error);

@@ -5,11 +5,11 @@ const User = require("../models/User");
 // USER LOGIN
 exports.login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { username, password } = req.body;
     const ipAddress = req.ip || req.connection.remoteAddress;
     const userAgent = req.headers["user-agent"] || "";
 
-    const details = await authService.login(email, password, {
+    const details = await authService.login(username, password, {
       ipAddress,
       deviceInfo: userAgent,
       browser: userAgent.includes("Chrome") ? "Chrome" : "Other",

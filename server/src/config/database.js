@@ -19,21 +19,38 @@ const seedDB = async () => {
     }
 
     // Seed default admin user
-    const adminEmail = "admin@prakriti.com";
-    const adminUser = await User.findOne({ email: adminEmail });
+    const adminUser = await User.findOne({ $or: [{ userCode: "USR-0001" }, { email: "admin@prakriti.com" }] });
     if (!adminUser) {
       const hashedPassword = await bcrypt.hash("admin", 10);
       await User.create({
         userCode: "USR-0001",
         name: "Prakriti Owner",
-        email: adminEmail,
+        email: "admin@prakriti.com",
         mobile: "9876543210",
         password: hashedPassword,
         roleId: ownerRole._id,
         status: "Active",
         mustChangePassword: false,
       });
-      console.log(`🌱 Seeded default user account: ${adminEmail} (password: admin).`);
+      console.log(`🌱 Seeded default user account: USR-0001 (password: admin).`);
+    }
+
+    // Automatic migration for existing users missing userCode
+    const usersWithoutCode = await User.find({
+      $or: [{ userCode: { $exists: false } }, { userCode: null }, { userCode: "" }],
+    });
+    if (usersWithoutCode.length > 0) {
+      let count = 1001;
+      for (const u of usersWithoutCode) {
+        let newCode = `USR-${count}`;
+        while (await User.findOne({ userCode: newCode })) {
+          count++;
+          newCode = `USR-${count}`;
+        }
+        await User.updateOne({ _id: u._id }, { $set: { userCode: newCode, ...(u.roleId ? {} : { roleId: ownerRole._id }) } });
+        console.log(`🔄 Migrated existing user ${u._id} (${u.name}) to userCode: ${newCode}`);
+        count++;
+      }
     }
   } catch (error) {
     console.error("❌ Failed to seed database:", error);
