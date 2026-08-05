@@ -11,7 +11,7 @@ const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || "prakriti_refresh_s
 /**
  * Handles account credentials verification, locks, and session audits.
  */
-const login = async (email, password, sessionDetails = {}) => {
+/*const login = async (email, password, sessionDetails = {}) => {
   const user = await User.findOne({ email }).populate("roleId");
   if (!user) {
     throw new Error("Invalid email or password.");
@@ -98,7 +98,131 @@ const login = async (email, password, sessionDetails = {}) => {
     refreshToken,
   };
 };
+*/
 
+const login = async (email, password, sessionDetails = {}) => {
+  console.log("========== LOGIN DEBUG ==========");
+  console.log("EMAIL RECEIVED:", email);
+
+  const user = await User.findOne({ email }).populate("roleId");
+
+  console.log("USER FOUND:", !!user);
+
+  if (user) {
+    console.log("DB EMAIL:", user.email);
+    console.log("DB PASSWORD:", user.password);
+    console.log("ROLE:", user.roleId);
+  }
+
+  if (!user) {
+    console.log("❌ USER NOT FOUND");
+    throw new Error("Invalid email or password.");
+  }
+
+  if (user.status !== "Active") {
+    console.log("❌ USER NOT ACTIVE");
+    throw new Error("User account is inactive. Please contact support.");
+  }
+
+  const now = new Date();
+
+  if (user.accountLockedUntil && user.accountLockedUntil > now) {
+    console.log("❌ ACCOUNT LOCKED");
+    const minsLeft = Math.ceil((user.accountLockedUntil - now) / 60000);
+    throw new Error(
+      `Account is locked due to multiple failed login attempts. Try again in ${minsLeft} minutes.`
+    );
+  }
+
+  console.log("PASSWORD RECEIVED:", password);
+
+  const isMatch = await bcrypt.compare(password, user.password);
+
+  console.log("PASSWORD MATCH:", isMatch);
+
+  if (!isMatch) {
+    user.failedLoginAttempts += 1;
+
+    if (user.failedLoginAttempts >= 5) {
+      user.accountLockedUntil = new Date(Date.now() + 15 * 60 * 1000);
+
+      await auditLogService.logEvent({
+        module: "Auth",
+        action: "Account Locked",
+        performedBy: email,
+        targetId: user._id.toString(),
+        ipAddress: sessionDetails.ipAddress,
+      });
+    }
+
+    await user.save();
+
+    console.log("❌ INVALID PASSWORD");
+    throw new Error("Invalid email or password.");
+  }
+
+  console.log("✅ PASSWORD VERIFIED");
+
+  user.failedLoginAttempts = 0;
+  user.accountLockedUntil = null;
+  user.lastLogin = now;
+  await user.save();
+
+  const accessToken = jwt.sign(
+    {
+      userId: user._id,
+      role: user.roleId.roleName,
+    },
+    JWT_SECRET,
+    {
+      expiresIn: "1h",
+    }
+  );
+
+  const refreshToken = jwt.sign(
+    {
+      userId: user._id,
+    },
+    JWT_REFRESH_SECRET,
+    {
+      expiresIn: "7d",
+    }
+  );
+
+  const session = await UserSession.create({
+    userId: user._id,
+    refreshToken,
+    ipAddress: sessionDetails.ipAddress,
+    deviceInfo: sessionDetails.deviceInfo,
+    browser: sessionDetails.browser,
+    operatingSystem: sessionDetails.operatingSystem,
+    isActive: true,
+  });
+
+  await auditLogService.logEvent({
+    module: "Auth",
+    action: "Login Successful",
+    performedBy: email,
+    targetId: session._id.toString(),
+    ipAddress: sessionDetails.ipAddress,
+  });
+
+  console.log("✅ LOGIN SUCCESS");
+  console.log("==============================");
+
+  return {
+    user: {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.roleId.roleName,
+      permissions: user.roleId.permissions || {},
+      mustChangePassword: user.mustChangePassword,
+    },
+    accessToken,
+    refreshToken,
+  };
+};
 /**
  * Logout session deactivation.
  */
