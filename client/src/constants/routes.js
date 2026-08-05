@@ -35,6 +35,7 @@ export const ROUTES = {
   BUSINESS_INTELLIGENCE: "/business-intelligence",
   COMMUNICATION: "/communication",
   DATA_PLATFORM: "/data-platform",
+  IDENTITY: "/identity",
   // Customer Self-Service Portal
   CUSTOMER_LOGIN: "/portal/login",
   CUSTOMER_DASHBOARD: "/portal/dashboard",

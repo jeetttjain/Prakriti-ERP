@@ -25,6 +25,7 @@ const automationRoutes = require("./routes/automation.routes");
 const businessIntelligenceRoutes = require("./routes/businessIntelligence.routes");
 const communicationRoutes = require("./routes/communication.routes");
 const enterpriseDataRoutes = require("./routes/enterpriseData.routes");
+const identityRoutes = require("./routes/identity.routes");
 const healthRoutes = require("./routes/health.routes");
 const schedulerService = require("./services/scheduler.service");
 const initAllListeners = require("./core/listeners");
@@ -89,6 +90,7 @@ app.use("/api/automation", automationRoutes);
 app.use("/api/bi", businessIntelligenceRoutes);
 app.use("/api/communication", communicationRoutes);
 app.use("/api/data", enterpriseDataRoutes);
+app.use("/api/identity", identityRoutes);
 
 // Root Index Route
 app.get("/", (req, res) => {

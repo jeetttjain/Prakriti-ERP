@@ -1,42 +1,42 @@
-# Business Intelligence & Recommendation Engine — API Reference
+# IAM Platform — API Reference
 
-## Authentication & Security
-All `/api/bi/*` endpoints require standard JWT session header `Authorization: Bearer <token>` and are restricted to `Owner`, `Admin`, and `Manager` roles. Audit logs are recorded per access.
+## Endpoints Specifications (`/api/identity/*`)
 
----
+### 1. `POST /api/identity/login`
+Centralized IAM authentication returning JWT tokens, session ID, and device trust metadata.
 
-## Endpoint Specifications
+### 2. `POST /api/identity/logout`
+Revokes active session and blacklists token.
 
-### 1. `GET /api/bi/overview`
-Returns composite Business Health Score (0-100), active recommendation alerts, and core summary metrics.
+### 3. `GET /api/identity/users`
+Returns list of IAM user accounts.
 
-### 2. `GET /api/bi/recommendations`
-Returns active and historical recommendations.
-- **Filters**: `category`, `severity`, `status`
+### 4. `GET /api/identity/sessions`
+Returns active session trajectory logs.
 
-### 3. `GET /api/bi/sales`
-Returns sales intelligence, AOV, peak ordering hours, and 14-day sales trend.
+### 5. `GET /api/identity/devices`
+Returns registered devices with risk scores and trust statuses.
 
-### 4. `GET /api/bi/inventory`
-Returns inventory valuation, low stock items, dead stock value, and turnover ratio.
+### 6. `GET /api/identity/apikeys`
+Returns registered active API keys.
 
-### 5. `GET /api/bi/customers`
-Returns customer intelligence, top high-value accounts, repeat %, and churn warnings.
+### 7. `GET /api/identity/security`
+Returns security policy configuration.
 
-### 6. `GET /api/bi/suppliers`
-Returns supplier lead time hours, on-time delivery %, and vendor rankings.
+### 8. `POST /api/identity/session/revoke`
+Force revokes an active session.
 
-### 7. `GET /api/bi/finance`
-Returns gross profit, net margin %, collection efficiency %, and overdue receivables.
+### 9. `POST /api/identity/device/trust`
+Marks a device as trusted.
 
-### 8. `GET /api/bi/purchases`
-Returns procurement trends, most purchased SKUs, and cost optimization savings.
+### 10. `POST /api/identity/device/block`
+Blocks a device fingerprint.
 
-### 9. `GET /api/bi/health`
-Returns composite Business Health Score (0-100) and sub-scores.
+### 11. `POST /api/identity/apikey`
+Issues a new HMAC-signed API Key.
 
-### 10. `POST /api/bi/recommendation/:id/resolve`
-Transitions recommendation status to `Resolved`. Accepts `{ resolutionNotes }`.
+### 12. `PATCH /api/identity/security-policy`
+Updates security policy settings.
 
-### 11. `POST /api/bi/recommendation/:id/archive`
-Transitions recommendation status to `Archived`.
+### 13. `DELETE /api/identity/apikey/:id`
+Revokes an API Key.

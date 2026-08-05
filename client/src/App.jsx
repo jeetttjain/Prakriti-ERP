@@ -40,6 +40,7 @@ const Automation = lazy(() => import("./pages/Automation"));
 const BusinessIntelligence = lazy(() => import("./pages/business-intelligence/BusinessIntelligenceConsole"));
 const Communication = lazy(() => import("./pages/communication/CommunicationConsole"));
 const DataPlatform = lazy(() => import("./pages/data-platform/EnterpriseDataConsole"));
+const Identity = lazy(() => import("./pages/identity/IdentityConsole"));
 
 // Customer Portal Pages
 const CustomerLogin = lazy(() => import("./pages/portal/CustomerLogin"));
@@ -528,6 +529,16 @@ export default function App() {
               <ProtectedRoute requireAuth={true}>
                 <AdminLayout>
                   <DataPlatform />
+                </AdminLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={ROUTES.IDENTITY}
+            element={
+              <ProtectedRoute requireAuth={true}>
+                <AdminLayout>
+                  <Identity />
                 </AdminLayout>
               </ProtectedRoute>
             }
