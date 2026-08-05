@@ -25,14 +25,16 @@ const automationRoutes = require("./routes/automation.routes");
 const businessIntelligenceRoutes = require("./routes/businessIntelligence.routes");
 const healthRoutes = require("./routes/health.routes");
 const schedulerService = require("./services/scheduler.service");
+const initAllListeners = require("./core/listeners");
 
 const app = express();
 
 // Trust reverse proxy for Railway/Vercel/Cloudflare
 app.set("trust proxy", 1);
 
-// Initialize background scheduler on server start
+// Initialize background scheduler and Event Bus listeners on server start
 schedulerService.startScheduler();
+initAllListeners();
 
 // Production Security Response Headers Middleware
 app.use((req, res, next) => {
