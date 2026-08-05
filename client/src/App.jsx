@@ -10,7 +10,7 @@ import ProtectedRoute from "./components/common/ProtectedRoute";
 
 // Lazy-loaded Views & Pages
 const Login = lazy(() => import("./pages/Login"));
-const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Dashboard = lazy(() => import("./pages/dashboard/ExecutiveDashboard"));
 const Orders = lazy(() => import("./pages/Orders"));
 const OrderDetails = lazy(() => import("./pages/OrderDetails"));
 const Customers = lazy(() => import("./pages/Customers"));

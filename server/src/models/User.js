@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema(
     accountLockedUntil: { type: Date },
     passwordChangedAt: { type: Date, default: Date.now },
     mustChangePassword: { type: Boolean, default: false },
+    dashboardPreferences: { type: mongoose.Schema.Types.Mixed, default: {} },
     createdBy: { type: String },
     updatedBy: { type: String },
   },

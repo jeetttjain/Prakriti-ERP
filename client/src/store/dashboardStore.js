@@ -1,62 +1,86 @@
 import { create } from "zustand";
 import * as dashboardService from "../services/dashboardService";
 
-const LAYOUT_KEY = "erp_dashboard_layout";
 let currentAbortController = null;
 
-/**
- * Zustand Store for coordinating dashboard state and layouts.
- * @exports useDashboardStore
- */
 export const useDashboardStore = create((set, get) => ({
   overview: null,
   kpis: null,
   charts: null,
   activity: null,
   alerts: null,
+  health: null,
   loading: false,
   error: null,
+  lastUpdated: null,
 
-  // Personalization settings
-  widgetOrder: (() => {
-    try {
-      const stored = localStorage.getItem(LAYOUT_KEY);
-      if (stored) {
-        const layout = JSON.parse(stored);
-        if (layout.order) return layout.order;
-      }
-    } catch {}
-    return ["kpis", "charts", "alerts", "activity", "status"];
-  })(),
-
-  hiddenWidgets: (() => {
-    try {
-      const stored = localStorage.getItem(LAYOUT_KEY);
-      if (stored) {
-        const layout = JSON.parse(stored);
-        if (layout.hidden) return layout.hidden;
-      }
-    } catch {}
-    return {
-      kpis: false,
-      charts: false,
-      alerts: false,
-      activity: false,
-      status: false,
-    };
-  })(),
-
-  setWidgetOrder: (order) => {
-    const { hiddenWidgets } = get();
-    localStorage.setItem(LAYOUT_KEY, JSON.stringify({ order, hidden: hiddenWidgets }));
-    set({ widgetOrder: order });
+  // Global Filter State
+  filters: {
+    timeframe: "all", // today, thisWeek, thisMonth, thisYear, all
+    startDate: "",
+    endDate: "",
+    branchId: "",
+    warehouseId: "",
+    categoryId: "",
   },
 
-  toggleWidgetVisibility: (widgetId, isVisible) => {
+  // Personalization settings
+  widgetOrder: ["kpis", "charts", "salesAnalytics", "inventoryAnalytics", "financeAnalytics", "alerts", "activity", "health"],
+  hiddenWidgets: {
+    kpis: false,
+    charts: false,
+    salesAnalytics: false,
+    inventoryAnalytics: false,
+    financeAnalytics: false,
+    alerts: false,
+    activity: false,
+    health: false,
+  },
+
+  setFilter: (key, value) => {
+    const updatedFilters = { ...get().filters, [key]: value };
+    set({ filters: updatedFilters });
+    get().fetchDashboard();
+  },
+
+  resetFilters: () => {
+    set({
+      filters: {
+        timeframe: "all",
+        startDate: "",
+        endDate: "",
+        branchId: "",
+        warehouseId: "",
+        categoryId: "",
+      },
+    });
+    get().fetchDashboard();
+  },
+
+  setWidgetOrder: async (order) => {
+    const { hiddenWidgets } = get();
+    set({ widgetOrder: order });
+    try {
+      await dashboardService.updatePreferences({ order, hidden: hiddenWidgets });
+    } catch {}
+  },
+
+  toggleWidgetVisibility: async (widgetId, isVisible) => {
     const { widgetOrder, hiddenWidgets } = get();
     const updatedHidden = { ...hiddenWidgets, [widgetId]: !isVisible };
-    localStorage.setItem(LAYOUT_KEY, JSON.stringify({ order: widgetOrder, hidden: updatedHidden }));
     set({ hiddenWidgets: updatedHidden });
+    try {
+      await dashboardService.updatePreferences({ order: widgetOrder, hidden: updatedHidden });
+    } catch {}
+  },
+
+  fetchPreferences: async () => {
+    try {
+      const res = await dashboardService.getPreferences();
+      const prefs = res.data || res;
+      if (prefs.order) set({ widgetOrder: prefs.order });
+      if (prefs.hidden) set({ hiddenWidgets: prefs.hidden });
+    } catch {}
   },
 
   fetchDashboard: async () => {
@@ -67,13 +91,16 @@ export const useDashboardStore = create((set, get) => ({
 
     set({ loading: true, error: null });
     try {
+      const { filters } = get();
       const config = { signal: currentAbortController.signal };
-      const [overview, kpis, charts, activity, alerts] = await Promise.all([
-        dashboardService.getOverview(config),
-        dashboardService.getKPIs(config),
-        dashboardService.getCharts(config),
-        dashboardService.getActivity(config),
-        dashboardService.getAlerts(config),
+      
+      const [overview, kpis, charts, activity, alerts, health] = await Promise.all([
+        dashboardService.getOverview(filters, config),
+        dashboardService.getKPIs(filters, config),
+        dashboardService.getCharts(filters, config),
+        dashboardService.getActivity(filters, config),
+        dashboardService.getAlerts(filters, config),
+        dashboardService.getHealth({}, config),
       ]);
 
       set({
@@ -82,11 +109,20 @@ export const useDashboardStore = create((set, get) => ({
         charts: charts.data !== undefined ? charts.data : charts,
         activity: activity.data !== undefined ? activity.data : activity,
         alerts: alerts.data !== undefined ? alerts.data : alerts,
+        health: health.data !== undefined ? health.data : health,
         loading: false,
+        lastUpdated: new Date().toLocaleTimeString(),
       });
     } catch (err) {
       if (err?.isCanceled) return;
       set({ error: err.message, loading: false });
     }
+  },
+
+  clearCache: async () => {
+    try {
+      await dashboardService.clearCache();
+      await get().fetchDashboard();
+    } catch {}
   },
 }));
