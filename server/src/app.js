@@ -22,6 +22,7 @@ const customerPortalRoutes = require("./routes/customerPortal.routes");
 const exportRoutes = require("./routes/export.routes");
 const auditRoutes = require("./routes/auditLog.routes");
 const automationRoutes = require("./routes/automation.routes");
+const businessIntelligenceRoutes = require("./routes/businessIntelligence.routes");
 const healthRoutes = require("./routes/health.routes");
 const schedulerService = require("./services/scheduler.service");
 
@@ -81,6 +82,7 @@ app.use("/api/customer-portal", customerPortalRoutes);
 app.use("/api/export", exportRoutes);
 app.use("/api/audit", auditRoutes);
 app.use("/api/automation", automationRoutes);
+app.use("/api/bi", businessIntelligenceRoutes);
 
 // Root Index Route
 app.get("/", (req, res) => {

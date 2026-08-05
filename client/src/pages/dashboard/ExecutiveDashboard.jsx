@@ -113,6 +113,13 @@ export default function ExecutiveDashboard() {
             >
               🧹 Clear Cache
             </button>
+            <Link
+              to="/business-intelligence"
+              className="btn"
+              style={{ background: "#22c55e", color: "white", fontWeight: "700" }}
+            >
+              ⚡ Open BI Console
+            </Link>
             <button
               onClick={() => setCustomizeOpen(!customizeOpen)}
               className="btn"
