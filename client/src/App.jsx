@@ -42,6 +42,7 @@ const Communication = lazy(() => import("./pages/communication/CommunicationCons
 const DataPlatform = lazy(() => import("./pages/data-platform/EnterpriseDataConsole"));
 const Identity = lazy(() => import("./pages/identity/IdentityConsole"));
 const Observability = lazy(() => import("./pages/observability/EnterpriseOperationsCenter"));
+const Finance = lazy(() => import("./pages/finance/EnterpriseFinanceConsole"));
 
 // Customer Portal Pages
 const CustomerLogin = lazy(() => import("./pages/portal/CustomerLogin"));
@@ -550,6 +551,16 @@ export default function App() {
               <ProtectedRoute requireAuth={true}>
                 <AdminLayout>
                   <Observability />
+                </AdminLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={ROUTES.FINANCE}
+            element={
+              <ProtectedRoute requireAuth={true}>
+                <AdminLayout>
+                  <Finance />
                 </AdminLayout>
               </ProtectedRoute>
             }
