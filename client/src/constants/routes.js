@@ -34,6 +34,7 @@ export const ROUTES = {
   AUTOMATION: "/automation",
   BUSINESS_INTELLIGENCE: "/business-intelligence",
   COMMUNICATION: "/communication",
+  DATA_PLATFORM: "/data-platform",
   // Customer Self-Service Portal
   CUSTOMER_LOGIN: "/portal/login",
   CUSTOMER_DASHBOARD: "/portal/dashboard",
