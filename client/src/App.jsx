@@ -38,6 +38,7 @@ const Notifications = lazy(() => import("./pages/Notifications"));
 const AuditLogs = lazy(() => import("./pages/AuditLogs"));
 const Automation = lazy(() => import("./pages/Automation"));
 const BusinessIntelligence = lazy(() => import("./pages/business-intelligence/BusinessIntelligenceConsole"));
+const Communication = lazy(() => import("./pages/communication/CommunicationConsole"));
 
 // Customer Portal Pages
 const CustomerLogin = lazy(() => import("./pages/portal/CustomerLogin"));
@@ -506,6 +507,16 @@ export default function App() {
               <ProtectedRoute requireAuth={true}>
                 <AdminLayout>
                   <BusinessIntelligence />
+                </AdminLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={ROUTES.COMMUNICATION}
+            element={
+              <ProtectedRoute requireAuth={true}>
+                <AdminLayout>
+                  <Communication />
                 </AdminLayout>
               </ProtectedRoute>
             }
