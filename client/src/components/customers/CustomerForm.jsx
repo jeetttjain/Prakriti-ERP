@@ -14,6 +14,8 @@ import ConfirmationModal from "../common/ConfirmationModal";
  * @param {Function} props.onClose Modal discard trigger
  * @param {Function} props.onSaved Save success callback
  */
+
+
 export default function CustomerForm({ customer, onClose, onSaved }) {
   const { registerCustomer, modifyCustomer, error: storeError } = useCustomerStore();
   const [submitting, setSubmitting] = useState(false);
@@ -116,7 +118,7 @@ export default function CustomerForm({ customer, onClose, onSaved }) {
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
     );
     if (focusable.length === 0) return;
-    
+
     const first = focusable[0];
     const last = focusable[focusable.length - 1];
 
@@ -253,6 +255,7 @@ export default function CustomerForm({ customer, onClose, onSaved }) {
     setFormData((prev) => ({ ...prev, branches: updatedBranches }));
   }, []);
 
+
   return (
     <div className="modal-overlay" style={{ display: "flex", overflowY: "auto" }} onClick={handleOutsideClick} onKeyDown={handleTabKey}>
       <div ref={modalRef} className="modal-box" style={{ maxWidth: "600px", margin: "auto" }} tabIndex="-1" role="dialog" aria-modal="true" aria-labelledby="form-modal-title">
@@ -267,7 +270,7 @@ export default function CustomerForm({ customer, onClose, onSaved }) {
                 {storeError}
               </div>
             )}
-            
+
             <div className="form-group">
               <label className="form-label">Business Name *</label>
               <input

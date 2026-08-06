@@ -17,11 +17,12 @@ export default function Customers() {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isQROpen, setIsQROpen] = useState(false);
 
+
   // Trigger initial paginated customer load
   useEffect(() => {
-  fetchCustomers();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, []);
+    fetchCustomers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleOpenCreate = () => {
     setActiveFormCustomer(null);
@@ -86,7 +87,7 @@ export default function Customers() {
       </div>
 
       <CustomerSearch />
-      
+
       <CustomerList onOpenQR={handleOpenQR} onOpenEdit={handleOpenEdit} />
 
       {isFormOpen && (
@@ -104,8 +105,9 @@ export default function Customers() {
           onClose={() => setIsQROpen(false)}
         />
       )}
-      
-      <style dangerouslySetInnerHTML={{ __html: `
+
+      <style dangerouslySetInnerHTML={{
+        __html: `
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .spin-icon { animation: spin 1s linear infinite; }
       `}} />

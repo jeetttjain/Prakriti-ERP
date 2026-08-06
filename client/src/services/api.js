@@ -24,7 +24,7 @@ api.interceptors.request.use(
           const { accessToken } = JSON.parse(cpSession);
           if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
         }
-      } catch {}
+      } catch { }
     } else {
       try {
         const adminSession = localStorage.getItem("prakriti_auth_session");
@@ -32,7 +32,7 @@ api.interceptors.request.use(
           const { accessToken } = JSON.parse(adminSession);
           if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
         }
-      } catch {}
+      } catch { }
     }
 
     return config;
@@ -69,7 +69,7 @@ api.interceptors.response.use(
     // Handle 401 Token Expiration with Refresh Token fallback
     if (error.response && error.response.status === 401 && originalRequest && !originalRequest._retry) {
       const isPortalRoute = originalRequest.url && originalRequest.url.includes("/customer-portal");
-      
+
       // Avoid infinite loop if refresh request itself failed
       if (originalRequest.url.includes("/auth/refresh")) {
         if (isPortalRoute) {

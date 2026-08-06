@@ -13,6 +13,7 @@ export const getCustomers = async (page = 1, limit = 8, status = "", paymentCycl
 
     const response = await api.get(`${API_ENDPOINTS.CUSTOMERS.BASE}?${params.toString()}`, config);
     return response.data;
+
   } catch (error) {
     throw normalizeError(error);
   }
