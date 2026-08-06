@@ -3,15 +3,27 @@ const mongoose = require("mongoose");
 const recommendationSchema = new mongoose.Schema(
   {
     recId: { type: String },
-    customerCode: { type: String, required: true, unique: true },
+    ruleId: { type: String },
+    status: { type: String, default: "Active" },
+    category: { type: String },
+    severity: { type: String },
+    priority: { type: String },
+    title: { type: String },
+    description: { type: String },
+    reason: { type: String },
+    suggestedAction: { type: String },
+    estimatedImpact: { type: Object },
+    metricsSnapshot: { type: Object },
+    aiConfidence: { type: Number },
+    customerCode: { type: String },
     recommendedProducts: [
       {
-        productCode: { type: String, required: true },
-        reason: { type: String, required: true },
+        productCode: { type: String },
+        reason: { type: String },
       },
     ],
   },
-  { timestamps: true }
+  { timestamps: true, strict: false }
 );
 
 module.exports = mongoose.model("Recommendation", recommendationSchema);
