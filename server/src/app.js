@@ -30,6 +30,7 @@ const observabilityRoutes = require("./routes/observability.routes");
 const financeRoutes = require("./routes/finance.routes");
 const supplyChainRoutes = require("./routes/supplychain.routes");
 const systemControlRoutes = require("./routes/systemControl.routes");
+const hrmsRoutes = require("./routes/hrms.routes");
 const healthRoutes = require("./routes/health.routes");
 const schedulerService = require("./services/scheduler.service");
 const initAllListeners = require("./core/listeners");
@@ -99,6 +100,7 @@ app.use("/api/observability", observabilityRoutes);
 app.use("/api/finance", financeRoutes);
 app.use("/api/supplychain", supplyChainRoutes);
 app.use("/api/system", systemControlRoutes);
+app.use("/api/hrms", hrmsRoutes);
 
 // Root Index Route
 app.get("/", (req, res) => {

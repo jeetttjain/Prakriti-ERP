@@ -40,6 +40,7 @@ export const ROUTES = {
   FINANCE: "/finance",
   SUPPLY_CHAIN: "/supply-chain",
   SYSTEM_CONTROL: "/system-control",
+  HRMS: "/hrms",
   // Customer Self-Service Portal
   CUSTOMER_LOGIN: "/portal/login",
   CUSTOMER_DASHBOARD: "/portal/dashboard",
