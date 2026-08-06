@@ -21,7 +21,12 @@ const COMPANY_DETAILS = {
  * @param {number} amount 
  * @returns {string} Words representation
  */
-const numberToWords = require("number-to-words");
+let numberToWords = null;
+try {
+  numberToWords = require("number-to-words");
+} catch (e) {
+  // Safe fallback if package not available in environment
+}
 const { formatPhone } = require("../utils/phoneUtils");
 const convertAmountToWords = (amount) => {
   const num = Math.floor(Math.abs(Number(amount) || 0));
