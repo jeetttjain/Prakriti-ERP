@@ -39,6 +39,7 @@ export const ROUTES = {
   OBSERVABILITY: "/observability",
   FINANCE: "/finance",
   SUPPLY_CHAIN: "/supply-chain",
+  SYSTEM_CONTROL: "/system-control",
   // Customer Self-Service Portal
   CUSTOMER_LOGIN: "/portal/login",
   CUSTOMER_DASHBOARD: "/portal/dashboard",
