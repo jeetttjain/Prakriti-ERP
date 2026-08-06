@@ -1,4 +1,4 @@
-const CustomerOrder = require("../../../models/CustomerOrder");
+
 const Invoice = require("../../../models/Invoice");
 
 class ArManager {
