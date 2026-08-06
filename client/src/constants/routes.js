@@ -38,6 +38,7 @@ export const ROUTES = {
   IDENTITY: "/identity",
   OBSERVABILITY: "/observability",
   FINANCE: "/finance",
+  SUPPLY_CHAIN: "/supply-chain",
   // Customer Self-Service Portal
   CUSTOMER_LOGIN: "/portal/login",
   CUSTOMER_DASHBOARD: "/portal/dashboard",

@@ -28,6 +28,7 @@ const enterpriseDataRoutes = require("./routes/enterpriseData.routes");
 const identityRoutes = require("./routes/identity.routes");
 const observabilityRoutes = require("./routes/observability.routes");
 const financeRoutes = require("./routes/finance.routes");
+const supplyChainRoutes = require("./routes/supplychain.routes");
 const healthRoutes = require("./routes/health.routes");
 const schedulerService = require("./services/scheduler.service");
 const initAllListeners = require("./core/listeners");
@@ -95,6 +96,7 @@ app.use("/api/data", enterpriseDataRoutes);
 app.use("/api/identity", identityRoutes);
 app.use("/api/observability", observabilityRoutes);
 app.use("/api/finance", financeRoutes);
+app.use("/api/supplychain", supplyChainRoutes);
 
 // Root Index Route
 app.get("/", (req, res) => {
