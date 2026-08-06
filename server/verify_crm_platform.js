@@ -34,11 +34,12 @@ async function runTests() {
   try {
     console.log("\n--- TEST 1: B2B / B2C Customer Master & Credit Profile ---");
     const customers = await customerManager.listCustomers();
+    const testPhone = `98290${Math.floor(10005 + Math.random() * 89990)}`;
     const newCust = await customerManager.createCustomer({
       companyName: "Udaipur Fresh Mart",
       contactName: "Kamlesh Mehta",
-      email: "kamlesh@udaipurfresh.com",
-      phone: "+919829011111",
+      email: `kamlesh-${Date.now()}@udaipurfresh.com`,
+      phone: testPhone,
       gstin: "08CCCCCC2222C1Z4",
       segment: "Wholesale",
       creditLimit: 300000,
@@ -50,11 +51,12 @@ async function runTests() {
     console.log("✅ Customer 360 Aggregated! Health Score:", c360.healthScore.healthScore, "| Loyalty Tier:", c360.loyaltyAccount.tier);
 
     console.log("\n--- TEST 3: Lead Capture, Extensible Lead Scoring & Auto-Conversion ---");
+    const leadPhone = `98290${Math.floor(10005 + Math.random() * 89990)}`;
     const lead = await leadManager.createLead({
       companyName: "Kota Super Market",
       contactName: "Anil Agarwal",
-      email: "anil@kotasuper.com",
-      phone: "+919829022222",
+      email: `anil-${Date.now()}@kotasuper.com`,
+      phone: leadPhone,
       leadSource: "Website",
       leadScore: 88,
     });
