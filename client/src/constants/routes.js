@@ -41,6 +41,7 @@ export const ROUTES = {
   SUPPLY_CHAIN: "/supply-chain",
   SYSTEM_CONTROL: "/system-control",
   HRMS: "/hrms",
+  CRM: "/crm",
   // Customer Self-Service Portal
   CUSTOMER_LOGIN: "/portal/login",
   CUSTOMER_DASHBOARD: "/portal/dashboard",

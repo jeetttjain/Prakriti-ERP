@@ -46,6 +46,7 @@ const Finance = lazy(() => import("./pages/finance/EnterpriseFinanceConsole"));
 const SupplyChain = lazy(() => import("./pages/supply-chain/EnterpriseSupplyChainConsole"));
 const SystemControl = lazy(() => import("./pages/system-control/EnterpriseSystemControlCenter"));
 const HRMS = lazy(() => import("./pages/hrms/EnterpriseHRMSConsole"));
+const CRM = lazy(() => import("./pages/crm/EnterpriseCRMConsole"));
 
 // Customer Portal Pages
 const CustomerLogin = lazy(() => import("./pages/portal/CustomerLogin"));
@@ -594,6 +595,16 @@ export default function App() {
               <ProtectedRoute requireAuth={true}>
                 <AdminLayout>
                   <HRMS />
+                </AdminLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={ROUTES.CRM}
+            element={
+              <ProtectedRoute requireAuth={true}>
+                <AdminLayout>
+                  <CRM />
                 </AdminLayout>
               </ProtectedRoute>
             }
