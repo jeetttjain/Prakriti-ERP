@@ -117,3 +117,39 @@ export const recordCollection = async (payload) => {
     throw normalizeError(err);
   }
 };
+
+export const getContracts = async () => {
+  try {
+    const res = await api.get("/crm/contracts");
+    return res.data;
+  } catch (err) {
+    throw normalizeError(err);
+  }
+};
+
+export const getCampaigns = async () => {
+  try {
+    const res = await api.get("/crm/campaigns");
+    return res.data;
+  } catch (err) {
+    throw normalizeError(err);
+  }
+};
+
+export const getCommissions = async () => {
+  try {
+    const res = await api.get("/crm/commissions");
+    return res.data;
+  } catch (err) {
+    throw normalizeError(err);
+  }
+};
+
+export const getSurveys = async () => {
+  try {
+    const res = await api.get("/crm/surveys");
+    return res.data;
+  } catch (err) {
+    throw normalizeError(err);
+  }
+};

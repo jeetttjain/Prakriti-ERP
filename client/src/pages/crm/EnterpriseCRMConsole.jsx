@@ -139,6 +139,8 @@ export default function EnterpriseCRMConsole() {
           { id: "quotes", label: "📜 Quotations & Dispatches" },
           { id: "visits", label: "📍 Sales Visits & Beat Plans" },
           { id: "complaints", label: "⚠️ Complaints & SLA Center" },
+          { id: "campaigns", label: "🚀 Marketing Campaigns" },
+          { id: "contracts", label: "📋 Contracts & Renewals" },
         ].map((tab) => (
           <button
             key={tab.id}

@@ -20,6 +20,14 @@ router.get("/collections", ctrl.getCollections);
 router.get("/forecast", ctrl.getForecast);
 router.get("/health/:customerCode", ctrl.getHealth);
 router.get("/analytics", ctrl.getAnalytics);
+router.get("/contracts", ctrl.getContracts);
+router.get("/commissions", ctrl.getCommissions);
+router.get("/campaigns", ctrl.getCampaigns);
+router.get("/surveys", ctrl.getSurveys);
+router.get("/success/:customerCode", ctrl.getCustomerSuccess);
+router.get("/recommendations/:customerCode", ctrl.getRecommendations);
+router.get("/territory-performance", ctrl.getTerritoryPerformance);
+router.get("/audit", ctrl.getAuditLogs);
 
 router.post("/customer", ctrl.createCustomer);
 router.post("/lead", ctrl.createLead);
@@ -28,5 +36,7 @@ router.post("/quotation", ctrl.createQuotation);
 router.post("/visit", ctrl.logVisit);
 router.post("/complaint", ctrl.logComplaint);
 router.post("/collection", ctrl.recordCollection);
+router.post("/contract", ctrl.createContract);
+router.post("/campaign", ctrl.createCampaign);
 
 module.exports = router;

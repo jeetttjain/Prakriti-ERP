@@ -18,6 +18,14 @@ const customerHealthEngine = require("../core/crm/health/customerHealthEngine");
 const salesForecastEngine = require("../core/crm/forecast/salesForecastEngine");
 const loyaltyEngine = require("../core/crm/loyalty/loyaltyEngine");
 const crmAnalytics = require("../core/crm/analytics/crmAnalytics");
+const contractManager = require("../core/crm/contracts/contractManager");
+const salesCommissionEngine = require("../core/crm/commissions/salesCommissionEngine");
+const campaignManager = require("../core/crm/campaigns/campaignManager");
+const surveyEngine = require("../core/crm/surveys/surveyEngine");
+const customerSuccessEngine = require("../core/crm/success/customerSuccessEngine");
+const recommendationEngine = require("../core/crm/recommendations/recommendationEngine");
+const territoryPerformanceEngine = require("../core/crm/territories/territoryPerformanceEngine");
+const crmAuditEngine = require("../core/crm/audit/crmAuditEngine");
 const { successResponse, errorResponse } = require("../services/response.service");
 
 // GET /api/crm/customers
@@ -243,3 +251,106 @@ exports.recordCollection = async (req, res) => {
     return errorResponse(res, error.message, 400);
   }
 };
+
+// GET /api/crm/contracts
+exports.getContracts = async (req, res) => {
+  try {
+    const contracts = await contractManager.listContracts(req.query.customerCode);
+    return successResponse(res, contracts, "Contracts retrieved.");
+  } catch (error) {
+    return errorResponse(res, error.message, 500);
+  }
+};
+
+// GET /api/crm/commissions
+exports.getCommissions = async (req, res) => {
+  try {
+    const comms = await salesCommissionEngine.getCommissionsForExecutive(req.query.executiveCode || "SALES-EXEC-01");
+    return successResponse(res, comms, "Commissions retrieved.");
+  } catch (error) {
+    return errorResponse(res, error.message, 500);
+  }
+};
+
+// GET /api/crm/campaigns
+exports.getCampaigns = async (req, res) => {
+  try {
+    const campaigns = await campaignManager.listCampaigns();
+    return successResponse(res, campaigns, "Campaigns retrieved.");
+  } catch (error) {
+    return errorResponse(res, error.message, 500);
+  }
+};
+
+// GET /api/crm/surveys
+exports.getSurveys = async (req, res) => {
+  try {
+    const surveys = await surveyEngine.listSurveys();
+    return successResponse(res, surveys, "Surveys retrieved.");
+  } catch (error) {
+    return errorResponse(res, error.message, 500);
+  }
+};
+
+// GET /api/crm/success/:customerCode
+exports.getCustomerSuccess = async (req, res) => {
+  try {
+    const success = await customerSuccessEngine.getSuccessHealth(req.params.customerCode);
+    return successResponse(res, success, "Customer success health retrieved.");
+  } catch (error) {
+    return errorResponse(res, error.message, 500);
+  }
+};
+
+// GET /api/crm/recommendations/:customerCode
+exports.getRecommendations = async (req, res) => {
+  try {
+    const recs = await recommendationEngine.getRecommendations(req.params.customerCode);
+    return successResponse(res, recs, "Product recommendations retrieved.");
+  } catch (error) {
+    return errorResponse(res, error.message, 500);
+  }
+};
+
+// GET /api/crm/territory-performance
+exports.getTerritoryPerformance = async (req, res) => {
+  try {
+    const perf = await territoryPerformanceEngine.getTerritoryMetrics();
+    return successResponse(res, perf, "Territory performance retrieved.");
+  } catch (error) {
+    return errorResponse(res, error.message, 500);
+  }
+};
+
+// GET /api/crm/audit
+exports.getAuditLogs = async (req, res) => {
+  try {
+    const logs = await crmAuditEngine.getAuditLogs();
+    return successResponse(res, logs, "Audit logs retrieved.");
+  } catch (error) {
+    return errorResponse(res, error.message, 500);
+  }
+};
+
+// POST /api/crm/contract
+exports.createContract = async (req, res) => {
+  try {
+    const { customerCode, title, contractValue } = req.body;
+    const contract = await contractManager.createContract(customerCode, title, contractValue);
+    return successResponse(res, contract, "Contract created.", 201);
+  } catch (error) {
+    return errorResponse(res, error.message, 400);
+  }
+};
+
+// POST /api/crm/campaign
+exports.createCampaign = async (req, res) => {
+  try {
+    const { name, channel, targetSegment, budget } = req.body;
+    const campaign = await campaignManager.createCampaign(name, channel, targetSegment, budget);
+    return successResponse(res, campaign, "Campaign created.", 201);
+  } catch (error) {
+    return errorResponse(res, error.message, 400);
+  }
+};
+

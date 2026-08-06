@@ -17,6 +17,16 @@ const salesForecastEngine = require("./src/core/crm/forecast/salesForecastEngine
 const loyaltyEngine = require("./src/core/crm/loyalty/loyaltyEngine");
 const crmAnalytics = require("./src/core/crm/analytics/crmAnalytics");
 
+// Expansion Engines
+const salesCommissionEngine = require("./src/core/crm/commissions/salesCommissionEngine");
+const campaignManager = require("./src/core/crm/campaigns/campaignManager");
+const surveyEngine = require("./src/core/crm/surveys/surveyEngine");
+const contractManager = require("./src/core/crm/contracts/contractManager");
+const recommendationEngine = require("./src/core/crm/recommendations/recommendationEngine");
+const customerSuccessEngine = require("./src/core/crm/success/customerSuccessEngine");
+const territoryPerformanceEngine = require("./src/core/crm/territories/territoryPerformanceEngine");
+const crmAuditEngine = require("./src/core/crm/audit/crmAuditEngine");
+
 async function runTests() {
   console.log("🔄 Connecting to Database...");
   await connectDB();
@@ -90,11 +100,39 @@ async function runTests() {
     const loyalty = await loyaltyEngine.redeemPoints(newCust.customerCode, 100);
     console.log("✅ Loyalty Points Redeemed! Remaining Balance:", loyalty.pointsBalance);
 
-    console.log("\n--- TEST 11: CRM Analytics Calculator ---");
+    console.log("\n--- TEST 11: HRMS & Finance Integrated Sales Commissions ---");
+    const commission = await salesCommissionEngine.calculateCommission("SALES-EXEC-01", quote.quotationId, 350000);
+    console.log("✅ Sales Commission Calculated & Accrued in Finance! ID:", commission.commissionId, "Amount: ₹", commission.commissionAmount);
+
+    console.log("\n--- TEST 12: Marketing Campaigns & Target Segments ---");
+    const campaigns = await campaignManager.listCampaigns();
+    console.log("✅ Marketing Campaigns Active:", campaigns.length, "| Top Campaign:", campaigns[0].name);
+
+    console.log("\n--- TEST 13: Customer Contracts & EDP Linkage ---");
+    const contracts = await contractManager.listContracts(newCust.customerCode);
+    console.log("✅ Customer Contracts Loaded:", contracts.length, "| Contract ID:", contracts[0].contractId);
+
+    console.log("\n--- TEST 14: Customer Success Health & Churn Risk Prediction ---");
+    const success = await customerSuccessEngine.getSuccessHealth(newCust.customerCode);
+    console.log("✅ Customer Success Score:", success.successScore, "| Churn Risk:", success.churnRisk);
+
+    console.log("\n--- TEST 15: Product Recommendations Engine ---");
+    const recs = await recommendationEngine.getRecommendations(newCust.customerCode);
+    console.log("✅ Product Recommendations Generated:", recs.recommendedProducts.length, "items.");
+
+    console.log("\n--- TEST 16: Territory Performance KPIs ---");
+    const terrPerf = await territoryPerformanceEngine.getTerritoryMetrics();
+    console.log("✅ Territory Performance Metrics Loaded for", terrPerf.length, "Territories.");
+
+    console.log("\n--- TEST 17: CRM Audit Logging & EOP Telemetry ---");
+    const audit = await crmAuditEngine.logAudit("QUOTATION_ISSUED", "Quotation", quote.quotationId, "SALES-EXEC-01");
+    console.log("✅ Immutable Audit Logged & EOP Metric Recorded! Audit ID:", audit.auditId);
+
+    console.log("\n--- TEST 18: CRM Analytics Calculator ---");
     const analytics = await crmAnalytics.getCRMPerformanceMetrics();
     console.log("✅ CRM Analytics: Conversion Rate =", analytics.leadConversionRatePct, "% | Pipeline Value = ₹", analytics.pipelineValueTotal);
 
-    console.log("\n🎉 ALL 11 ENTERPRISE CRM PLATFORM TESTS PASSED SUCCESSFULLY!");
+    console.log("\n🎉 ALL 18 ENTERPRISE CRM PLATFORM EXPANSION TESTS PASSED SUCCESSFULLY!");
   } catch (error) {
     console.error("❌ Test failed with error:", error);
     process.exit(1);

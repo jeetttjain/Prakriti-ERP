@@ -7,6 +7,10 @@ const Quotation = require("../../../models/Quotation");
 const Complaint = require("../../../models/Complaint");
 const SalesVisit = require("../../../models/SalesVisit");
 
+const CustomerContract = require("../../../models/CustomerContract");
+const customerSuccessEngine = require("../success/customerSuccessEngine");
+const recommendationEngine = require("../recommendations/recommendationEngine");
+
 class Customer360Engine {
   /**
    * Aggregates a complete 360-degree unified profile for a customer.
@@ -15,7 +19,7 @@ class Customer360Engine {
     const customer = await Customer.findOne({ customerCode });
     if (!customer) throw new Error(`Customer ${customerCode} not found.`);
 
-    const [credit, loyalty, health, activities, quotations, complaints, visits] = await Promise.all([
+    const [credit, loyalty, health, activities, quotations, complaints, visits, contracts, success, recs] = await Promise.all([
       CreditProfile.findOne({ customerCode }),
       LoyaltyAccount.findOne({ customerCode }),
       CustomerHealth.findOne({ customerCode }),
@@ -23,6 +27,9 @@ class Customer360Engine {
       Quotation.find({ customerCode }).sort({ createdAt: -1 }),
       Complaint.find({ customerCode }).sort({ createdAt: -1 }),
       SalesVisit.find({ customerCode }).sort({ createdAt: -1 }),
+      CustomerContract.find({ customerCode }).sort({ createdAt: -1 }),
+      customerSuccessEngine.getSuccessHealth(customerCode),
+      recommendationEngine.getRecommendations(customerCode),
     ]);
 
     return {
@@ -34,6 +41,9 @@ class Customer360Engine {
       quotations,
       complaints,
       visits,
+      contracts,
+      customerSuccess: success,
+      recommendations: recs,
       biRecommendations: [
         "Cross-sell Organic Mustard Oil 5L container",
         "Offer 5% bulk volume discount on next order",
