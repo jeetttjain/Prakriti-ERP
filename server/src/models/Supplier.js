@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { generateCounter } = require("../services/counter.service");
+const { normalizePhone } = require("../utils/phoneUtils");
 
 const supplierSchema = new mongoose.Schema(
   {
@@ -24,6 +25,8 @@ const supplierSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+      set: normalizePhone,
+      get: normalizePhone,
     },
     gst: {
       type: String,

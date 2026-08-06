@@ -21,7 +21,9 @@ const COMPANY_DETAILS = {
  * @param {number} amount 
  * @returns {string} Words representation
  */
-const numberToWords = (amount) => {
+const numberToWords = require("number-to-words");
+const { formatPhone } = require("../utils/phoneUtils");
+const convertAmountToWords = (amount) => {
   const num = Math.floor(Math.abs(Number(amount) || 0));
   const paise = Math.round((Math.abs(Number(amount) || 0) - num) * 100);
 
@@ -304,7 +306,7 @@ const renderInvoiceHTML = (invoice, company = COMPANY_DETAILS) => {
           <strong style="color: #16a34a;">BILLED TO:</strong><br>
           <strong style="font-size: 14px; color: #1f2937;">${customer.businessName || "Valued Customer"}</strong><br>
           Contact Person: ${customer.personName || "N/A"}<br>
-          Phone: +91 ${customer.contactNumber || customer.mobile || "N/A"}<br>
+          Phone: ${formatPhone(customer.contactNumber || customer.mobile || customer.phone) || "N/A"}<br>
           Address: ${customer.address || "N/A"}<br>
           GSTIN: ${customer.gstNumber || "URP (Unregistered)"}
         </td>
@@ -465,7 +467,7 @@ const renderPaymentReceiptHTML = (payment, company = COMPANY_DETAILS) => {
           <strong style="color: #16a34a;">RECEIVED FROM:</strong><br>
           <strong style="font-size: 14px;">${customer.businessName || "Customer"}</strong><br>
           Contact: ${customer.personName || "N/A"}<br>
-          Phone: +91 ${customer.contactNumber || customer.mobile || "N/A"}
+          Phone: ${formatPhone(customer.contactNumber || customer.mobile || customer.phone) || "N/A"}
         </td>
         <td style="width: 50%;" class="info-box">
           <strong style="color: #16a34a;">RECEIPT DETAILS:</strong><br>
@@ -518,7 +520,7 @@ const renderDeliveryChallanHTML = (order, company = COMPANY_DETAILS) => {
         <td style="width: 50%;" class="info-box">
           <strong style="color: #16a34a;">DELIVER TO:</strong><br>
           <strong style="font-size: 14px;">${customer.businessName || "Customer"}</strong><br>
-          Phone: +91 ${customer.contactNumber || customer.mobile || "N/A"}<br>
+          Phone: ${formatPhone(customer.contactNumber || customer.mobile || customer.phone) || "N/A"}<br>
           Address: ${customer.address || "N/A"}
         </td>
         <td style="width: 50%;" class="info-box">
@@ -579,7 +581,7 @@ const renderCustomerStatementHTML = (customer, invoices = [], payments = [], sta
           <strong style="color: #16a34a;">CUSTOMER STATEMENT FOR:</strong><br>
           <strong style="font-size: 14px;">${customer.businessName || "Customer"}</strong><br>
           Contact: ${customer.personName || "N/A"}<br>
-          Phone: +91 ${customer.contactNumber || customer.mobile || "N/A"}
+          Phone: ${formatPhone(customer.contactNumber || customer.mobile || customer.phone) || "N/A"}
         </td>
         <td style="width: 50%;" class="info-box">
           <strong style="color: #16a34a;">ACCOUNT SUMMARY:</strong><br>

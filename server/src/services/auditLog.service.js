@@ -198,7 +198,8 @@ const getAuditLogs = async (query = {}) => {
     filter.userId = query.userId;
   }
   if (query.search) {
-    const reg = new RegExp(query.search, "i");
+    const { escapeRegex } = require("../utils/phoneUtils");
+    const reg = new RegExp(escapeRegex(query.search), "i");
     filter.$or = [
       { auditNumber: reg },
       { description: reg },

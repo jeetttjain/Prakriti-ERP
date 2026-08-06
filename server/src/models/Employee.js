@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { normalizePhone } = require("../utils/phoneUtils");
 
 const employeeSchema = new mongoose.Schema(
   {
@@ -9,14 +10,18 @@ const employeeSchema = new mongoose.Schema(
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     email: { type: String, required: true },
-    phone: { type: String },
+    phone: { type: String, set: normalizePhone, get: normalizePhone },
     departmentCode: { type: String, required: true },
     designationCode: { type: String, required: true },
     managerUserCode: { type: String },
     status: { type: String, enum: ["Probation", "Active", "Resigned", "Exited"], default: "Active" },
     joiningDate: { type: Date, default: Date.now },
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { getters: true }, toObject: { getters: true } }
 );
+
+employeeSchema.pre("save", function () {
+  if (this.phone) this.phone = normalizePhone(this.phone);
+});
 
 module.exports = mongoose.model("Employee", employeeSchema);

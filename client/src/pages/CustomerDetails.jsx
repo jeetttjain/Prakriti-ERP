@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useCustomerStore } from "../store/customerStore";
 import { ROUTES } from "../constants/routes";
+import { formatPhone } from "../utils/phoneUtils";
 
 /**
  * Renders detailed dashboard view card for a selected B2B customer.
@@ -85,15 +86,15 @@ export default function CustomerDetails() {
               </div>
               <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.9rem", borderBottom: "1px solid var(--border)", paddingBottom: "8px" }}>
                 <span style={{ color: "var(--text-light)" }}>Contact Number:</span>
-                <strong style={{ color: "var(--text-main)" }}>+91 {selectedCustomer.contactNumber || selectedCustomer.mobile}</strong>
+                <strong style={{ color: "var(--text-main)" }}>{formatPhone(selectedCustomer.contactNumber || selectedCustomer.mobile || selectedCustomer.phone)}</strong>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.9rem", borderBottom: "1px solid var(--border)", paddingBottom: "8px" }}>
                 <span style={{ color: "var(--text-light)" }}>WhatsApp Number:</span>
-                <strong style={{ color: "var(--text-main)" }}>+91 {selectedCustomer.whatsappNumber || selectedCustomer.contactNumber || selectedCustomer.mobile}</strong>
+                <strong style={{ color: "var(--text-main)" }}>{formatPhone(selectedCustomer.whatsappNumber || selectedCustomer.contactNumber || selectedCustomer.mobile || selectedCustomer.phone)}</strong>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.9rem", borderBottom: "1px solid var(--border)", paddingBottom: "8px" }}>
                 <span style={{ color: "var(--text-light)" }}>GSTIN:</span>
-                <strong style={{ color: "var(--text-main)" }}>{selectedCustomer.gstNumber || "Not Provided"}</strong>
+                <strong style={{ color: "var(--text-main)" }}>{selectedCustomer.gstNumber || selectedCustomer.gstin || "Not Provided"}</strong>
               </div>
               <div style={{ display: "flex", flexDirection: "column", fontSize: "0.9rem", borderBottom: "1px solid var(--border)", paddingBottom: "8px", gap: "4px" }}>
                 <span style={{ color: "var(--text-light)" }}>Billing Address:</span>
@@ -124,10 +125,10 @@ export default function CustomerDetails() {
             </div>
           </div>
 
-          <div className="card">
-            <div className="card-header">
-              <h3 className="card-title">Connected Branches</h3>
-              <span className="badge badge-info">{selectedCustomer.branches?.length || 0} Nodes</span>
+          {/* Additional Branches */}
+          <div className="card" style={{ marginTop: "16px" }}>
+            <div className="card-header" style={{ padding: "12px 16px", borderBottom: "1px solid var(--border)" }}>
+              <h3 style={{ margin: 0, fontSize: "1rem" }}>Branch Delivery Locations ({selectedCustomer.branches?.length || 0})</h3>
             </div>
             <div className="card-content" style={{ padding: "16px" }}>
               {selectedCustomer.hasBranches && selectedCustomer.branches?.length > 0 ? (
@@ -139,7 +140,7 @@ export default function CustomerDetails() {
                         <span className={`badge ${b.status === "Active" ? "badge-success" : "badge-danger"}`} style={{ fontSize: "0.7rem", padding: "2px 6px" }}>{b.status}</span>
                       </div>
                       <div style={{ fontSize: "0.8rem", color: "var(--text-muted)" }}>
-                        Contact: {b.personName} | Call: +91 {b.contactNumber || b.mobile} | WhatsApp: +91 {b.whatsappNumber || b.contactNumber || b.mobile}
+                        Contact: {b.personName} | Call: {formatPhone(b.contactNumber || b.mobile)} | WhatsApp: {formatPhone(b.whatsappNumber || b.contactNumber || b.mobile)}
                       </div>
                       <div style={{ fontSize: "0.8rem", color: "var(--text-light)", marginTop: "4px" }}>
                         Address: {b.address}

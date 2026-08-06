@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { generateTempId } from "../../utils/helpers";
+import { formatPhone } from "../../utils/phoneUtils";
 import FormError from "../common/FormError";
 
 /**
@@ -186,7 +187,7 @@ export default function CustomerBranchSection({ branches, mainMobile, onChangeBr
           <div>
             <strong>{b.branchName}</strong> ({b.personName}) <br />
             <span style={{ color: "var(--text-muted)", fontSize: "0.8rem" }}>
-              Call: +91 {b.contactNumber || b.mobile} | WhatsApp: +91 {b.whatsappNumber || b.contactNumber || b.mobile} <br />
+              Call: {formatPhone(b.contactNumber || b.mobile)} | WhatsApp: {formatPhone(b.whatsappNumber || b.contactNumber || b.mobile)} <br />
               Address: {b.address}
             </span>
           </div>

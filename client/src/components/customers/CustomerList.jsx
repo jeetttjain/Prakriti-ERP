@@ -8,6 +8,8 @@ import ErrorState from "../common/ErrorState";
 import Pagination from "../common/Pagination";
 import ConfirmationModal from "../common/ConfirmationModal";
 
+import { formatPhone } from "../../utils/phoneUtils";
+
 /**
  * Memoized list row component for Customer list table.
  * @component
@@ -17,10 +19,10 @@ const CustomerRow = React.memo(({ cust, onOpenQR, onOpenEdit, onToggleStatus, on
   
   return (
     <tr>
-      <td style={{ fontWeight: 700, color: "var(--text-main)" }}>{cust.businessName}</td>
-      <td>{cust.personName}</td>
-      <td>+91 {cust.contactNumber || cust.mobile}</td>
-      <td>+91 {cust.whatsappNumber || cust.contactNumber || cust.mobile}</td>
+      <td style={{ fontWeight: 700, color: "var(--text-main)" }}>{cust.businessName || cust.companyName}</td>
+      <td>{cust.personName || cust.contactName}</td>
+      <td>{formatPhone(cust.contactNumber || cust.mobile || cust.phone)}</td>
+      <td>{formatPhone(cust.whatsappNumber || cust.contactNumber || cust.mobile || cust.phone)}</td>
       <td>
         <span className="badge badge-info">{cust.paymentCycle || 15} Days</span>
       </td>

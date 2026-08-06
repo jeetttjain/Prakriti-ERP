@@ -28,8 +28,9 @@ exports.createProduct = async (req, res) => {
     } = req.body;
 
     // Case-insensitive duplicate check on productName
+    const { escapeRegex } = require("../utils/phoneUtils");
     const existingProduct = await Product.findOne({
-      productName: { $regex: new RegExp(`^${productName.trim()}$`, "i") },
+      productName: { $regex: new RegExp(`^${escapeRegex(productName.trim())}$`, "i") },
     });
 
     if (existingProduct) {

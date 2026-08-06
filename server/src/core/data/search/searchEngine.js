@@ -1,4 +1,5 @@
 const EnterpriseFile = require("../../../models/EnterpriseFile");
+const { escapeRegex } = require("../../../utils/phoneUtils");
 
 class SearchEngine {
   /**
@@ -8,19 +9,19 @@ class SearchEngine {
     const query = { isDeleted: false };
 
     if (queryText) {
-      const regex = new RegExp(queryText, "i");
+      const safeRegex = new RegExp(escapeRegex(queryText), "i");
       query.$or = [
-        { filename: regex },
-        { originalName: regex },
-        { module: regex },
-        { tags: regex },
-        { owner: regex },
+        { filename: safeRegex },
+        { originalName: safeRegex },
+        { module: safeRegex },
+        { tags: safeRegex },
+        { owner: safeRegex },
       ];
     }
 
     if (filters.module) query.module = filters.module;
     if (filters.classification) query.securityClassification = filters.classification;
-    if (filters.mimeType) query.mimeType = new RegExp(filters.mimeType, "i");
+    if (filters.mimeType) query.mimeType = new RegExp(escapeRegex(filters.mimeType), "i");
 
     const files = await EnterpriseFile.find(query).sort({ createdAt: -1 }).limit(50);
     return {
